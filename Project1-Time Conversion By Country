@@ -1,0 +1,33 @@
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
+
+public class adi {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Taking user input for local time zone
+        System.out.print("Enter your local time zone in a given manner \n(e.g. Asia/Kolkata, Asia/Tashkent, Asia/Kuwait): ");
+        String localZone = sc.nextLine();
+        ZoneId localZoneId = ZoneId.of(localZone);
+
+        // Taking user input for country time zone
+        System.out.print("Enter the country time zone in a given manner  \n(e.g. America/New_York, Europe/London, Asia/Tokyo): ");
+        String countryZone = sc.nextLine();
+        ZoneId countryZoneId = ZoneId.of(countryZone);
+
+        // Convert local time to country time
+        LocalDateTime localDateTime = LocalDateTime.now(localZoneId);
+        LocalDateTime countryDateTime = localDateTime.atZone(localZoneId).withZoneSameInstant(countryZoneId).toLocalDateTime();
+
+        // Formating Date and time 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String localTime = formatter.format(localDateTime);
+        String countryTime = formatter.format(countryDateTime);
+
+        System.out.println("Local Time (" + localZoneId + "): " + localTime);
+        System.out.println("Country Time (" + countryZoneId + "): " + countryTime);
+        
+    }
+}
